@@ -98,31 +98,10 @@ bool MyGraph::ConnectNode(MyNode* startNode, MyNode* endNode, bool biDirectional
 		tList->push_back(new MyConnection(startNode, endNode, 0));
 		NodeConnections[startNode] = tList;
 	}
-		return true;
-	auto endFind = NodeConnections.find(endNode);
-	if (endFind != NodeConnections.end())
-	{
-		bool any = false;
 
-		for (auto it = (*endFind).second->begin(); it != (*endFind).second->end();++it)
-		{
-			if ((*it)->ToNode == startNode)
-			{
-				any = true;
-				break;
-			}
-		}
-		if (!any)
-		{
-			NodeConnections[endNode]->push_back(new MyConnection(endNode, startNode, 0));
-		}
-	}
-	else
-	{
-		auto tList = new std::list<MyConnection*>();
-		tList->push_back(new MyConnection(endNode, startNode, 0));
-		NodeConnections[endNode] = tList;
-	}
+	if (biDirectional)
+		return ConnectNode(endNode,startNode,false);
+	
 	return true;
 }
 
