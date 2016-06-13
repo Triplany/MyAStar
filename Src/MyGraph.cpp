@@ -1,4 +1,6 @@
 #include "MyGraph.h"
+#include <ostream>
+#include <iostream>
 
 using namespace MyAStarPath;
 
@@ -12,11 +14,11 @@ MyGraph::~MyGraph()
 	{
 		for (auto tt = (*it).second->begin(); tt != (*it).second->end();++tt)
 		{
-			delete *tt;
+			delete (*tt);
 		}
+		delete (*it).second;
 	}
 	NodeConnections.clear();
-
 	for (auto it = Nodes.begin(); it != Nodes.end();++it)
 	{
 		delete *it;
@@ -32,38 +34,79 @@ std::list<MyConnection*>* MyGraph::GetConnections(MyNode* node)
 	return NodeConnections[node];
 }
 
-void MyGraph::AddNode(MyNode* toAdd)
+MyNode * MyGraph::AddNode(MyNode toAdd)
 {
-	if (!NodeExists(toAdd->X, toAdd->Y, toAdd->Z))
-		Nodes.push_back(toAdd);
-
-
+	auto tNode = NodeExists(toAdd.X, toAdd.Y, toAdd.Z);
+	if (tNode == nullptr)
+	{
+		tNode = new MyNode(toAdd.X, toAdd.Y, toAdd.Z);
+		Nodes.push_back(tNode);
+	}
+	return tNode;
 }
 
-bool MyGraph::NodeExists(float x, float y, float z)
+MyNode* MyGraph::NodeExists(float x, float y, float z)
 {
-	for (auto it = Nodes.begin(); it != Nodes.end(); ++it)
+	for (auto it : Nodes)
 	{
-		if ((*it)->X == x && (*it)->Y == y && (*it)->Z == z)
-			return true;
+		if (it->X == x && it->Y == y && it->Z == z)
+			return it;
 	}
 
-	return false;
+	return nullptr;
 }
 
 bool MyGraph::RemoveNodeAndConnection(MyNode* toRemove)
 {
-	return true;
+	bool found = false;
+
+	// Delete from Connections
+
+	auto it = NodeConnections.begin();
+
+	while (it != NodeConnections.end())
+	{
+		auto tt = it->second->begin();
+		while (tt != it->second->end())
+		{
+			if ((*tt)->ToNode == toRemove || (*tt)->FromNode == toRemove)
+			{
+				auto toErase = tt;
+				++tt;
+				delete (*toErase);
+				it->second->erase(toErase);
+			}
+			else
+				++tt;
+		}
+		if ((*it).first == toRemove)
+		{
+			auto toErase = it;
+			++it;
+			delete toErase->second;
+			NodeConnections.erase(toErase);
+		}
+		else
+			++it;
+
+	}
+
+
+	// Delete From Node List
+	Nodes.remove(toRemove);
+	delete toRemove;
+
+	return false;
 }
 
 MyNode* MyGraph::FindClosestNode(float x, float y, float z, double maxDistance, bool mustConnect)
 {
 	MyNode tNode = MyNode(x, y, z);
 	MyNode* toRet = nullptr;
-	for (auto it = Nodes.begin(); it != Nodes.end(); ++it)
+	for (auto it : Nodes)
 	{
-		if ((*it)->Distance3D(&tNode) <= maxDistance && (toRet == nullptr || toRet->Distance3D(&tNode) > (*it)->Distance3D(&tNode)))
-			toRet = (*it);
+		if (it->GetDistance3D(tNode) <= maxDistance && (toRet == nullptr || toRet->GetDistance3D(tNode) > it->GetDistance3D(tNode)))
+			toRet = it;
 	}
 
 	return toRet;

@@ -11,8 +11,10 @@ namespace MyAStarPath
 		~MyNode();
 		
 		double Slope(MyNode *toNode) const;
-		double Distance3D(MyNode *toNode) const;
-		double Distance2D(MyNode *toNode) const;
+		double GetDistance3D(MyNode &toNode) const;
+		double GetDistance2D(MyNode &toNode) const;
+		bool IsNan() const;
+		bool IsInfinity() const;
 		float X;
 		float Y;
 		float Z;

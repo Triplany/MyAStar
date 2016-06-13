@@ -6,7 +6,7 @@ MyConnection::MyConnection(MyNode* from, MyNode* to, double weight = 0)
 {
 	FromNode = from;
 	ToNode = to;
-	Distance = to->Distance3D(from);
+	Distance = to->GetDistance3D(*from);
 	Weight = weight;
 }
 

@@ -15,7 +15,8 @@ MyAstar::~MyAstar()
 void MyAstar::InitialiseDjGraph(MyNode* startingNode)
 {
 	_qDjUnchecked.clear();
-	for (auto it = _myGraph->Nodes.begin(); it != _myGraph->Nodes.end();++it)
+	auto nodes = _myGraph->GetNodes();
+	for (auto it = nodes.begin(); it != nodes.end();++it)
 	{
 		(*it)->Prev = nullptr;
 		(*it)->Checked = false;
@@ -37,6 +38,8 @@ std::list<MyNode*> MyAstar::SearchForPath(MyNode* startNode, MyNode* endNode, bo
 {
 	InitialiseDjGraph(startNode);
 	auto lastPath = std::list<MyNode*>();
+	if (startNode == nullptr || endNode == nullptr)
+		return lastPath;
 
 	while (_qDjUnchecked.size() > 0)
 	{
