@@ -13,10 +13,6 @@ namespace MyAStarPath
 
 		double(*ChosenHeuristic)(MyNode*, MyNode*) = &MyHeuristics::EuclidianDistance;;
 
-		std::list<MyNode*> SearchForPath(MyNode *startNode, MyNode *endNode)
-		{
-			return SearchForPath(startNode, endNode, true, true);
-		}
 		std::list<MyNode*> SearchForPath(MyNode *startNode, MyNode *endNode, bool tryReverse, bool breakOnEndNode);
 
 	private: 

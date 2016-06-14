@@ -11,14 +11,13 @@ namespace MyAStarPath
 		std::list<MyNode*> Nodes;
 		std::map < MyNode*, std::list<MyConnection*>*> NodeConnections;
 
-
 	public:
 
 		MyGraph();
 		~MyGraph();
 
 		std::list<MyConnection*>* GetConnections(MyNode *node);
-		MyNode* AddNode(MyNode toAdd);
+		MyNode& AddNode(MyNode toAdd);
 		MyNode*  NodeExists(float x, float y, float z);
 		bool RemoveNodeAndConnection(MyNode *toRemove);
 
