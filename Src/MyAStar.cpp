@@ -14,6 +14,7 @@ MyAstar::~MyAstar()
 
 void MyAstar::InitialiseDjGraph(MyNode* startingNode)
 {
+
 	_qDjUnchecked.clear();
 	auto nodes = _myGraph->GetNodes();
 	for (auto it = nodes.begin(); it != nodes.end();++it)

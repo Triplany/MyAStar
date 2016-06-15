@@ -34,7 +34,7 @@ std::list<MyConnection*>* MyGraph::GetConnections(MyNode* node)
 	return NodeConnections[node];
 }
 
-MyNode & MyGraph::AddNode(MyNode toAdd)
+MyNode*  MyGraph::AddNode(MyNode toAdd)
 {
 	auto tNode = NodeExists(toAdd.X, toAdd.Y, toAdd.Z);
 	if (tNode == nullptr)
@@ -45,7 +45,7 @@ MyNode & MyGraph::AddNode(MyNode toAdd)
 
 		Nodes.push_back(tNode);
 	}
-	return *tNode;
+	return tNode;
 }
 
 MyNode* MyGraph::NodeExists(float x, float y, float z)
