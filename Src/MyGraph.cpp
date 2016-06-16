@@ -10,7 +10,7 @@ MyGraph::MyGraph()
 
 MyGraph::~MyGraph()
 {
-	for(auto it = NodeConnections.begin(); it != NodeConnections.end();++it)
+	for (auto it = NodeConnections.begin(); it != NodeConnections.end();++it)
 	{
 		for (auto tt = (*it).second->begin(); tt != (*it).second->end();++tt)
 		{
@@ -102,6 +102,24 @@ bool MyGraph::RemoveNodeAndConnection(MyNode* toRemove)
 	return false;
 }
 
+void MyGraph::RemoveNodesConnectionsInRadius(float x, float y, float z, double radius)
+{
+	auto it = Nodes.begin();
+	auto startPoint = MyNode(x, y, z);
+
+	while (it != Nodes.end())
+	{
+		if ((*it)->GetDistance3D(startPoint) <= radius)
+		{
+			auto toRemove = (*it);
+			++it;
+			RemoveNodeAndConnection(toRemove);
+		}
+		else
+			++it;
+	}
+}
+
 MyNode* MyGraph::FindClosestNode(float x, float y, float z, double maxDistance, bool mustConnect)
 {
 	MyNode tNode = MyNode(x, y, z);
@@ -151,7 +169,34 @@ bool MyGraph::ConnectNode(MyNode* startNode, MyNode* endNode, bool biDirectional
 	return true;
 }
 
-int MyGraph::ConnectNodesRadius(MyNode* statrNode, double radius, bool biDirectional)
+int MyGraph::ConnectNodesRadius(MyNode* startNode, double radius, bool biDirectional)
 {
-	return 0;
+	int cnt = 0;
+	for (auto it: Nodes)
+	{
+		if (it == startNode)
+			continue;
+
+		if (it->GetDistance3D(*startNode) <= radius)
+		{
+			ConnectNode(startNode, it, biDirectional);
+			cnt++;
+		}
+	}
+	return cnt;
+}
+
+std::list<MyConnection*> MyGraph::GetConnectionsList()
+{
+	auto toRet = std::list<MyConnection*>();
+
+	for (auto it = NodeConnections.begin(); it != NodeConnections.end();++it)
+	{
+		for (auto tt = (*it).second->begin(); tt != (*it).second->end();++tt)
+		{
+			toRet.push_back((*tt));
+		}
+	}
+
+	return toRet;
 }

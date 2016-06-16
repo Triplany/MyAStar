@@ -4,11 +4,11 @@
 #include <iostream>
 #include <string>
 #include <string.h>
-#include "json.hpp"
+//#include "json.hpp"
 
-using json = nlohmann::json;
+//using json = nlohmann::json;
 
-
+/*
 MyAStarPath::MyGraph* GetGraphFromJSON(std::string jsonGraph)
 {
 	auto toRet = new MyAStarPath::MyGraph();
@@ -71,18 +71,18 @@ std::string GetJSONFromGraph(MyAStarPath::MyGraph& graph)
 
 	return j.dump(1);
 }
-
+*/
 
 void main()
 {
 	std::cout << " test Started " << std::endl;
 	auto graph = new MyAStarPath::MyGraph();
-	auto nodea = MyAStarPath::MyNode(1, 1, 1);
-	auto nodeb = MyAStarPath::MyNode(2, 2, 2);
-	auto nodec = MyAStarPath::MyNode(3, 3, 3);
-	auto noded = MyAStarPath::MyNode(4, 4, 4);
-	auto nodee = MyAStarPath::MyNode(5, 5, 5);
-	auto nodef = MyAStarPath::MyNode(6, 6, 6);
+	auto nodea = MyAStarPath::MyNode(10, 10, 10);
+	auto nodeb = MyAStarPath::MyNode(20, 20, 20);
+	auto nodec = MyAStarPath::MyNode(30, 30, 30);
+	auto noded = MyAStarPath::MyNode(40, 40, 40);
+	auto nodee = MyAStarPath::MyNode(50, 50, 50);
+	auto nodef = MyAStarPath::MyNode(60, 60, 60);
 
 	auto a = graph->AddNode(nodea);
 	auto b = graph->AddNode(nodeb);
@@ -117,6 +117,7 @@ void main()
 	auto resultsc = astart.SearchForPath(c, f, false, true);
 	std::cout << "Should be 3: " << resultsc.size() << std::endl;
 
+	MyAStarPath::MyAstar::OptimizeStart(&resultsa, MyAStarPath::MyNode(15, 15, 15));
 
 		std::cout << "Load with 5,000 nodes" << std::endl;
 		for (int cnt = 0;cnt < 5000;cnt++)
@@ -124,11 +125,13 @@ void main()
 			graph->AddNode(MyAStarPath::MyNode(cnt, cnt, cnt));
 		}
 
+		/*
 	auto tstr = GetJSONFromGraph(*graph);
 
 	std::cout << tstr << std::endl;
 
 	auto tt = GetGraphFromJSON(tstr);
+	*/
 
 	std::cout << "delete graph" << std::endl;
 

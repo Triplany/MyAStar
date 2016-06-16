@@ -27,8 +27,18 @@ void PyxMyAStar::BindWithScript(Pyx::Scripting::Script* script)
 		.addFunction("GetDistance3D", &MyAStarPath::MyNode::GetDistance3D)
 		.addPropertyReadOnly("IsNan", &MyAStarPath::MyNode::IsNan)
 		.addPropertyReadOnly("IsInfinity", &MyAStarPath::MyNode::IsInfinity)
-
 		.endClass();
+
+
+	LuaBinding(script->GetLuaState())
+		.beginClass<MyAStarPath::MyConnection>("MyConnection")
+		.addConstructor(LUA_ARGS(MyAStarPath::MyNode *, MyAStarPath::MyNode *, double))
+		.addVariable("ToNode", &MyAStarPath::MyConnection::ToNode)
+		.addVariable("FromNode", &MyAStarPath::MyConnection::FromNode)
+		.addVariable("Distance", &MyAStarPath::MyConnection::Distance)
+		.addVariable("Weight", &MyAStarPath::MyConnection::Weight)
+		.endClass();
+
 
 	// Bind MyGraph
 	LuaBinding(script->GetLuaState())
@@ -37,9 +47,12 @@ void PyxMyAStar::BindWithScript(Pyx::Scripting::Script* script)
 		.addFunction("AddNode", &MyAStarPath::MyGraph::AddNode)
 		.addFunction("NodeExists", &MyAStarPath::MyGraph::NodeExists)
 		.addFunction("RemoveNodeAndConnection", &MyAStarPath::MyGraph::RemoveNodeAndConnection)
+		.addFunction("RemoveNodesConnectionsInRadius", &MyAStarPath::MyGraph::RemoveNodesConnectionsInRadius)
 		.addFunction("FindClosestNode", &MyAStarPath::MyGraph::FindClosestNode)
 		.addFunction("ConnectNode", &MyAStarPath::MyGraph::ConnectNode)
 		.addFunction("ConnectNodeRadius", &MyAStarPath::MyGraph::ConnectNodesRadius)
+		.addFunction("GetNodes", &MyAStarPath::MyGraph::GetNodes)
+		.addFunction("GetConnectionsList", &MyAStarPath::MyGraph::GetConnectionsList)
 		.addStaticFunction("LoadGraphFromJSON",&PyxMyAStar::LoadGraphFromJSON)
 		.addStaticFunction("GetJSONFromGraph", &PyxMyAStar::GetJSONFromGraph)
 		.endClass();
@@ -49,6 +62,7 @@ void PyxMyAStar::BindWithScript(Pyx::Scripting::Script* script)
 		.beginClass<MyAStarPath::MyAstar>("MyAStar")
 		.addConstructor(LUA_ARGS(MyAStarPath::MyGraph*))
 		.addFunction("SearchForPath", &MyAStarPath::MyAstar::SearchForPath)
+		.addStaticFunction("OptimizeStart", &MyAStarPath::MyAstar::OptimizeStart)
 		.endClass();
 
 }

@@ -35,10 +35,10 @@ void MyAstar::InitialiseDjGraph(MyNode* startingNode)
 	}
 }
 
-std::list<MyNode*> MyAstar::SearchForPath(MyNode* startNode, MyNode* endNode, bool tryReverse, bool breakOnEndNode)
+std::list<MyNode> MyAstar::SearchForPath(MyNode* startNode, MyNode* endNode, bool tryReverse, bool breakOnEndNode)
 {
 	InitialiseDjGraph(startNode);
-	auto lastPath = std::list<MyNode*>();
+	auto lastPath = std::list<MyNode>();
 	if (startNode == nullptr || endNode == nullptr)
 		return lastPath;
 
@@ -75,12 +75,50 @@ std::list<MyNode*> MyAstar::SearchForPath(MyNode* startNode, MyNode* endNode, bo
 	auto tnode = endNode->Prev;
 	while (tnode != nullptr)
 	{
-		lastPath.push_front(tnode);
+		lastPath.push_front(MyNode(tnode->X, tnode->Y, tnode->Z));
 		tnode = tnode->Prev;
 	}
 	if (lastPath.size() > 0)
 	{
-		lastPath.push_back(endNode);
+		lastPath.push_back(MyNode(endNode->X,endNode->Y,endNode->Z));
 	}
 	return lastPath;
+}
+
+void MyAstar::OptimizeStart(std::list<MyNode>* currentPath, MyNode startPoisition)
+{
+	auto it = currentPath->begin();
+	auto currentIt = it;
+
+	while (it != currentPath->end())
+	{
+		if ((*it).GetDistance3D(startPoisition) < (*currentIt).GetDistance3D(startPoisition))
+		{
+			currentIt = it;
+		}
+		else
+			break;
+
+		++it;
+	}
+
+	auto nextIt = ++currentIt;
+
+	if (it != currentPath->end() && nextIt != currentPath->end())
+	{
+		MyNode newStart = (*it);
+		auto totalDistance = (*it).GetDistance3D((*nextIt));
+		for (auto cnt=0.1;cnt < 1;cnt=cnt+0.1)
+		{
+			auto toTest = MyNode::Lerp((*it), (*nextIt), totalDistance*cnt);
+
+			if (toTest.GetDistance3D(startPoisition) < newStart.GetDistance3D(startPoisition))
+			{
+				newStart = toTest;
+			}
+		}
+		currentPath->erase(it);
+		currentPath->insert(nextIt, newStart);
+
+	}
 }

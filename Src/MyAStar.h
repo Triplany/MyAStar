@@ -13,7 +13,9 @@ namespace MyAStarPath
 
 		double(*ChosenHeuristic)(MyNode*, MyNode*) = &MyHeuristics::EuclidianDistance;;
 
-		std::list<MyNode*> SearchForPath(MyNode *startNode, MyNode *endNode, bool tryReverse, bool breakOnEndNode);
+		std::list<MyNode> SearchForPath(MyNode *startNode, MyNode *endNode, bool tryReverse, bool breakOnEndNode);
+		static void OptimizeStart(std::list<MyNode> *currentPath, MyNode startPoisition);
+
 
 	private: 
 		MyGraph *_myGraph = nullptr;

@@ -20,3 +20,4 @@ CTestTestfile.cmake
 *.exe
 *.cache
 *.opendb
+build/.vs/config/applicationhost.config
