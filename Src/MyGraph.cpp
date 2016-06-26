@@ -1,6 +1,6 @@
-#include "MyGraph.h"
 #include <ostream>
 #include <iostream>
+#include "MyGraph.hpp"
 
 using namespace MyAStarPath;
 

@@ -1,6 +1,6 @@
 #include <cstdio>
-#include "MyGraph.h"
-#include "MyAStar.h"
+#include "MyGraph.hpp"
+#include "MyAStar.hpp"
 #include <iostream>
 #include <string>
 #include <string.h>

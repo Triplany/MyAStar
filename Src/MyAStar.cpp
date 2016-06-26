@@ -1,4 +1,4 @@
-#include "MyAStar.h"
+#include "MyAStar.hpp"
 
 using namespace MyAStarPath;
 

@@ -1,4 +1,4 @@
-#include "MyNode.h"
+#include "MyNode.hpp"
 #include <math.h>
 using namespace MyAStarPath;
 

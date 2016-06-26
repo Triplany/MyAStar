@@ -1,6 +1,6 @@
-#include "PyxMyAStar.h"
+#include "PyxMyAStar.hpp"
 #include "Pyx/pyx.h"
-#include "MyAStar.h"
+#include "MyAStar.hpp"
 #include "json.hpp"
 
 

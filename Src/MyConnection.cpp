@@ -1,4 +1,4 @@
-#include "MyConnection.h"
+#include "MyConnection.hpp"
 
 using namespace MyAStarPath;
 

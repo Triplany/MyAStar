@@ -1,5 +1,5 @@
 #pragma once
-#include "MyNode.h"
+#include "MyNode.hpp"
 
 namespace MyAStarPath
 {

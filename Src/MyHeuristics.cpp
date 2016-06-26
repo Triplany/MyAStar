@@ -1,4 +1,4 @@
-#include "MyHeuristics.h"
+#include "MyHeuristics.hpp"
 #include <math.h>
 
 using namespace MyAStarPath;

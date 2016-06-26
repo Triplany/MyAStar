@@ -1,6 +1,6 @@
 #pragma once
-#include "MyGraph.h"
-#include "MyHeuristics.h"
+#include "MyGraph.hpp"
+#include "MyHeuristics.hpp"
 #include <list>
 
 namespace MyAStarPath

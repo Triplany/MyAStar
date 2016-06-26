@@ -1,7 +1,7 @@
 #pragma once
 #include <list>
 #include <map>
-#include "MyConnection.h"
+#include "MyConnection.hpp"
 
 namespace MyAStarPath
 {

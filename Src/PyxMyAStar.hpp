@@ -1,6 +1,6 @@
 #pragma once
 #include "Pyx/Scripting/Script.h"
-#include "MyGraph.h"
+#include "MyGraph.hpp"
 
 namespace PyxMyAStarLib
 {
